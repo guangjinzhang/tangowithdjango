@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}alllist{% endblock %}
+{% block body_block %}
+{% if user.is_authenticated %}
+    <div class="page-header">
+                <h1>All Streets</h1>
+    </div>
+            {% else %}
+    <div class="page-header">
+                <h1>All Streets</h1>
+    </div>
+            {% endif %}
+
+    <div class="row placeholders">
+            <div class="col-xs-12 col-sm-6 placeholder">
+
+              {% if streets %}
+                    <ul class="nav nav-pills nav-stacked">
+                        {% for street in streets %}
+                         <li class="list-group-item"><a href="{% url 'street'  street.slug %}">{{ street.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>There are no streets present.</strong>
+                {% endif %}
+            </div>
+          </div>
+{% endblock %}

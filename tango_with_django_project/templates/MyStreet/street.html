@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}{{ street_name }}{% endblock %}
+
+{% block body_block %}
+<div class="page-header">
+    <h1>{{ street_name }}</h1>
+</div>
+    {%if street.image%}
+    <div>
+            <img width = '800'height = '600' src="/media/{{street.image}}" ></br></br></br></br>
+    </div>
+    {%endif%}
+
+
+<table class="table table-striped table-hover">
+
+        <tr><td><h3><strong>Safety</strong></h3></td><td><input id="input-1" type="number" class="rating" data-show-clear="false" readonly='true' value ={{street.average_safety_rate}} data-size="md"  ></td></tr>
+        <tr><td><h3><strong>Business</strong></h3></td><td><input id="input-2" type="number" class="rating" data-show-clear="false" readonly='true' value ={{street.average_business_rate}} data-size="md"  ></td></tr>
+        <tr><td><h3><strong>Infrastructure</strong></h3></td><td><input id="input-4" type="number" class="rating" data-show-clear="false" readonly='true' value ={{street.average_infrastructure_rate}} data-size="md"  ></td></tr>
+        <tr><td><h3><strong>Average</strong></h3></td><td><input id="input-5" type="number" class="rating" data-show-clear="false" readonly='true' value ={{street.average_rate}} data-size="md" ></td></tr>
+</table>
+
+
+
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="page-header">
+                    <h1><small class="pull-right">{{comment.count}} comments</small> Comments </h1>
+                  </div>
+
+                    <div class="comments-list">
+                    {% if street %}
+                        {% if comment %}
+                        {% for cmt in comment %}
+
+                        <div class="panel panel-default">
+                        <div class="panel-body">
+
+                        <div class="media">
+                          <div class="media-left">
+                            <a href="#">
+                              <img width = '40' height = '40'class="media-object" src="/media/{{cmt.user.userprofile.picture}}">
+                            </a>
+                          </div>
+                          <div class="media-body">
+
+                              <h4 class="media-heading">{{cmt.user}}</h4>
+                              {{cmt.time}}
+                              <input id="input-3" type="number" class="rating" data-show-clear="false" readonly='true' value ={{cmt.rate}} data-size="xs"  >
+                        <div class="panel panel-default">
+                             <div class="panel-body">
+                              <p>{{ cmt.comment }}</p>
+                             </div>
+                        </div>
+
+
+                          </div>
+                        </div>
+                    </div>
+                            </div>
+                    {% endfor %}
+                        </div>
+                </div>
+            </div>
+
+        {% else %}
+            <strong>No comments currently in street.</strong>
+        {% endif %}
+    {% else %}
+        The specified street {{ street_name }} does not exist!
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'add_comment' street.slug %}">Add Comment</a></li>
+    {%endif%}
+{% endblock %}

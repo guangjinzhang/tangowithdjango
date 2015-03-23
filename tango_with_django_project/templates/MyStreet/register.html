@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Register with MyStreet{% endblock %}
+{% block body_block %}
+<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+        {% if registered %}
+        MyStreet says: <strong>thank you for registering!</strong>
+        <a href="/MyStreet/">Return to the homepage.</a><br />
+        {% else %}
+        <div class="page-header">
+        <h2 class="form-signin-heading">Sign Up Here</h2>
+        </div>
+        <form id="user_form" method="post" action="/MyStreet/register/"
+                enctype="multipart/form-data">
+
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}<br/>
+
+            <!-- Provide a button to click to submit the form. -->
+            <button class="btn btn-primary" type="submit" class="btn btn-default">Submit</button>
+        </form>
+        {% endif %}
+{% endblock %}

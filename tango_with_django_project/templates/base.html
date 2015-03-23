@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>My Street - {% block title %}My Street{% endblock %}</title>
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/MyStreet/">My Street</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}?next=/MyStreet/">Logout</a></li>
+                        <li><a href="{% url 'add_street' %}">Add a New Street</a></li>
+                    {% else %}
+                        <li><a href="{% url 'register' %}">Register Here</a></li>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                                <li><a href ="{% url 'search' %}">Search</a></li>
+                                <li><a href="{% url 'about' %}">About</a></li>
+
+              </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <h3>Ranting List</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="{% url 'safetylist' %}">Safety Rank</a></li>
+                <li><a href="{% url 'businesslist' %}">Business Rank</a></li>
+                <li><a href="{% url 'infrastructurelist' %}">Infrastructure Rank</a></li>
+                <li><a href="{% url 'alllist' %}">All</a></li>
+            {% block side_block %}{% endblock %}
+            </ul>
+
+
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+           <div>
+                {% block body_block %}{% endblock %}
+                </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+$("#input-id").rating();
+
+// with plugin options
+$("#input-id").rating(['min'=>1, 'max'=>5, 'step'=>0.1, 'size'=>'lg']);
+
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+  {% load staticfiles %}
+    <script src="{% static "star-rating.min.js" %}" type="text/javascript"></script>
+    <link href="{% static "star-rating.min.css" %}" media="all" rel="stylesheet" type="text/css" />
+
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Add comment{% endblock %}
+{% block body_block %}
+{% if street %}
+
+                <form role="form"  id="page_form" method="post" action="/MyStreet/street/{{street.slug}}/add_comment/">
+                <h2 class="form-signin-heading">Add a Comment to <a href="/MyStreet/street/{{street.slug}}/"> {{ street.name }}</a></h2>
+                    {% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                     <table class="table table-striped table-hover">
+                    {% for field in form.visible_fields %}
+                        <tr><td><h3><strong>{{ field.help_text }}</strong></h3></td><td>{{ field }}</td></tr>
+                         {% endfor %}
+                        <tr><td></td> <td><button class="btn btn-primary" type="submit" name="submit">Add Comment</button></td></tr>
+                     </table>
+                <br/>
+
+                </form>
+            {%  else %}
+            <p>This is street does not exist.</p>
+        {%  endif %}
+
+        {% endblock %}
